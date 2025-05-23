@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gokul Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; background: #fff; color: #333; transition: background 0.3s ease, color 0.3s ease; }
+    body.dark { background: #111; color: #eee; }
+    header { position: sticky; top: 0; background: #f9f9f9; z-index: 1000; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.3s ease; }
+    body.dark header { background: #1a1a1a; }
+    .logo { font-size: 1.5rem; font-weight: bold; color: #000; }
+    body.dark .logo { color: #fff; }
+    nav a { margin-left: 2rem; color: #000; text-decoration: none; font-weight: 500; font-size: 1.1rem; transition: color 0.3s ease; }
+    body.dark nav a { color: #eee; }
+    nav a:hover { color: #555; }
+    .menu-toggle {
+    display: none;
+    cursor: pointer;
+    }
+    .container { max-width: 1100px; margin: auto; padding: 2rem; }
+    section { padding: 5rem 2rem; animation: fadeIn 1s ease; }
+    .hero { 
+      text-align: center; 
+      padding: 12rem 2rem 8rem; 
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+    body.dark .hero { 
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(0,0,0,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+      opacity: 0.5;
+      z-index: 0;
+    }
+    body.dark .hero::before {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.03)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+    }
+    .hero .container {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 { 
+      font-size: 3rem; 
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    /* .hero h1 span::after { content: '|'; animation: blink 1s infinite; } */
+    .highlight::after {
+    content: '|';
+    animation: blink 1s infinite;
+    margin-left: 2px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: #555;
+    }
+    body.dark .hero p {
+      color: #ccc;
+    }
+    .highlight { 
+      color: #000; 
+      font-weight: bold;
+      position: relative;
+      display: inline-block;
+    }
+    .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      /* background: rgba(74, 107, 255, 0.3); */
+      z-index: -1;
+      transition: all 0.3s ease;
+    }
+    body.dark .highlight { 
+      color: #0ff;
+    }
+    /* body.dark .highlight::after {
+      background: rgba(0, 255, 255, 0.2);
+    } */
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .btn { 
+      margin-top: 0;
+      padding: 0.9rem 2rem; 
+      background: #000; 
+      border: none; 
+      color: #fff; 
+      font-weight: bold; 
+      cursor: pointer; 
+      border-radius: 50px; 
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover { 
+      background: #444; 
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #000;
+      color: #000;
+    }
+    body.dark .btn-outline {
+      border-color: #fff;
+      color: #fff;
+    }
+    body.dark .btn { 
+      background: #fff; 
+      color: #000; 
+    }
+    body.dark .btn:hover { 
+      background: #ddd; 
+    }
+    .btn i {
+      font-size: 1rem;
+    }
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    .skill-category {
+      background: #f8f8f8;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+    body.dark .skill-category {
+      background: #1f1f1f;
+    }
+    .skill-category:hover {
+      transform: translateY(-5px);
+    }
+    .skill-category h3 {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 8px;
+    }
+    body.dark .skill-category h3 {
+      color: #eee;
+    }
+    .skill-item {
+      margin-bottom: 15px;
+    }
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .skill-name {
+      font-weight: 600;
+    }
+    .skill-level {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    body.dark .skill-level {
+      color: #aaa;
+    }
+    .progress-bar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    body.dark .progress-bar {
+      background: #333;
+    }
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #4a6bff, #6a11cb);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1.5s ease;
+    }
+    .card { background: #fff; padding: 2rem; border-radius: 10px; margin-bottom: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid #ddd; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    body.dark .card { background: #1f1f1f; border-color: #333; }
+    footer { text-align: center; padding: 2rem 1rem; background: #f9f9f9; font-size: 0.9rem; color: #666; margin-top: 3rem; transition: background 0.3s ease; }
+    body.dark footer { background: #1a1a1a; color: #aaa; }
+    .stats-grid, .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .stat, .gallery-item { padding: 1.5rem; border-radius: 8px; background: #fafafa; border: 1px solid #eee; text-align: center; transition: transform 0.3s ease; }
+    .stat:hover, .gallery-item:hover { transform: scale(1.05); }
+    body.dark .stat, body.dark .gallery-item { background: #2a2a2a; border-color: #444; color: #eee; }
+    .resume { text-align: center; margin-top: 2rem; }
+    .resume a { display: inline-block; padding: 0.7rem 1.5rem; background: #000; color: #fff; border-radius: 5px; text-decoration: none; font-weight: bold; }
+    .resume a:hover { background: #444; }
+    .top-button { width: 40px;height: 40px;position: fixed; bottom: 30px; right: 30px; display: none; padding: 10px 10px; background: #000; color: #fff; border: none; border-radius: 50%; cursor: pointer; font-weight: bold; z-index: 999; }
+    .top-button:hover { background: #333; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    @media (max-width: 768px) {
+      nav a { margin-left: 1rem; font-size: 0.9rem; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .socials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    }
+
+    .socials i {
+    font-size: 24px;
+    color: #ffffff;
+    background-color: #333;
+    padding: 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(129, 122, 122, 0.3);
+    }
+
+    .socials i:hover {
+    transform: scale(1.1);
+    color: #fffefe;
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    }
+
+    /* Improved Projects Section Styles */
+    .projects-grid {
+      display: grid;
+      gap: 2rem;
+    }
+    
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .project-card .card-content {
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    
+    body.dark .project-card h3 {
+      color: #eee;
+    }
+    
+    .project-card p {
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+    
+    body.dark .project-card p {
+      color: #ccc;
+    }
+    
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .tech-item {
+      background: rgba(74, 107, 255, 0.1);
+      color: #4a6bff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    body.dark .tech-item {
+      background: rgba(0, 255, 255, 0.1);
+      color: #0ff;
+    }
+    
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .project-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .live-demo {
+      background: #4a6bff;
+      color: white;
+    }
+    
+    body.dark .live-demo {
+      background: #0ff;
+      color: #111;
+    }
+    
+    .source-code {
+      background: transparent;
+      border: 1px solid #4a6bff;
+      color: #4a6bff;
+    }
+    
+    body.dark .source-code {
+      border-color: #0ff;
+      color: #0ff;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+    
+    body.dark .project-card::before {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    }
+    
+    .project-card:hover::before {
+      opacity: 0.9;
+    }
+    
+    .project-image {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+    
+    .project-card:hover .project-image {
+      opacity: 0.2;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">PORTFOLIO</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <!-- <a href="#stats">Stats</a> -->
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <a href="https://drive.google.com/file/d/13PZb3WWh_HguGCuxf-V-cxkCrch0VkGc/view?usp=drive_link" download class="btn">Resume</a>
+      <button class="btn" onclick="toggleTheme()">🌓</button>
+      <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Hello, I'm <span class="highlight" id="typewriter"></span></h1>
+      <p>Crafting elegant, minimal full-stack applications with precision. I transform complex problems into simple, beautiful solutions.</p>
+      <div class="hero-buttons">
+        <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">
+          <i class="fas fa-code"></i> Explore Work
+        </button>
+        <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+          <i class="fas fa-paper-plane"></i> Contact Me
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2>About Me</h2>
+      <div class="card">
+        <p>Enthusiastic Full Stack Developer skilled in developing scalable, high-performance web applications. Proficient in Java, React.js, TypeScript, and RESTful API development, with hands-on experience in cloud technologies (AWS basics) and microservices architecture. Adept at both frontend and backend development, database management, and collaborative Agile workflows. Passionate about building impactful solutions and continuously improving technical expertise.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="fade-in">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-container">
+        <div class="skill-category">
+          <h3>Backend Development</h3>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Java</span>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="90"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Spring Boot</span>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="85"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">REST APIs</span>
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="80"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>Frontend Development</h3>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">HTML/CSS</span>
+              <span class="skill-level">Expert</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="95"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">JavaScript</span>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="90"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">React</span>
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="75"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>Database & DevOps</h3>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Oracle SQL</span>
+              <span class="skill-level">Advanced</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="85"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">Docker</span>
+              <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="70"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-info">
+              <span class="skill-name">AWS Basics</span>
+              <span class="skill-level">Beginner</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" data-level="60"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card card">
+          <div class="card-content">
+            <h3>Employee Management System</h3>
+            <p>A comprehensive full-stack application that streamlines HR operations with features like employee onboarding, leave management, performance tracking, and analytics dashboards. The system improves HR efficiency by 40% through automation.</p>
+            
+            <div class="tech-stack">
+              <span class="tech-item">Java</span>
+              <span class="tech-item">Spring Boot</span>
+              <span class="tech-item">React</span>
+              <span class="tech-item">Oracle SQL</span>
+              <span class="tech-item">REST API</span>
+            </div>
+            
+            <div class="project-links">
+              <a href="#" class="live-demo">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+              </a>
+              <a href="#" class="source-code">
+                <i class="fab fa-github"></i> Source Code
+              </a>
+            </div>
+          </div>
+          <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+        </div>
+        
+        <div class="project-card card">
+          <div class="card-content">
+            <h3>Real-time Chat Application</h3>
+            <p>A socket-based multi-client chat solution with private messaging, group chats, and notification systems. Supports 100+ concurrent users with end-to-end encryption for secure communication.</p>
+            
+            <div class="tech-stack">
+              <span class="tech-item">Java</span>
+              <span class="tech-item">Swing UI</span>
+              <span class="tech-item">Socket Programming</span>
+              <span class="tech-item">Multithreading</span>
+            </div>
+            
+            <div class="project-links">
+              <a href="#" class="live-demo">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+              </a>
+              <a href="#" class="source-code">
+                <i class="fab fa-github"></i> Source Code
+              </a>
+            </div>
+          </div>
+          <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+        </div>
+        
+        <div class="project-card card">
+          <div class="card-content">
+            <h3>E-commerce Platform</h3>
+            <p>A responsive online shopping platform with product catalog, shopping cart, user authentication, and payment integration. Reduced checkout time by 30% with optimized workflows.</p>
+            
+            <div class="tech-stack">
+              <span class="tech-item">React</span>
+              <span class="tech-item">Node.js</span>
+              <span class="tech-item">MongoDB</span>
+              <span class="tech-item">Stripe API</span>
+              <span class="tech-item">JWT Auth</span>
+            </div>
+            
+            <div class="project-links">
+              <a href="#" class="live-demo">
+                <i class="fas fa-external-link-alt"></i> Live Demo
+              </a>
+              <a href="#" class="source-code">
+                <i class="fab fa-github"></i> Source Code
+              </a>
+            </div>
+          </div>
+          <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">UI Mockup 1</div>
+        <div class="gallery-item">UI Mockup 2</div>
+        <div class="gallery-item">UI Mockup 3</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <div class="card">
+        <form id="contactForm">
+          <input type="text" placeholder="Your Name" required style="width: 100%; padding: 0.7rem; margin-bottom: 1rem;">
+          <input type="email" placeholder="Your Email" required style="width: 100%; padding: 0.7rem; margin-bottom: 1rem;">
+          <textarea placeholder="Your Message" rows="5" required style="width: 100%; padding: 0.7rem;"></textarea>
+          <button class="btn" type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <button id="backToTop" class="top-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fa-solid fa-jet-fighter-up"></i></button>
+
+  <footer>
+    <div class="socials">
+      <i class="fa-brands fa-github" onclick="openSocial('github')" style="cursor: pointer;"></i>
+      <i class="fab fa-linkedin" onclick="openSocial('linkedin')" style="cursor: pointer;"></i>
+      <i class="fab fa-instagram" onclick="openSocial('instagram')" style="cursor: pointer;"></i>
+      <i class="fa-solid fa-envelope" id="emailIcon"></i>
+    </div>
+    <p>© 2025 MyPortfolio | Built with care and minimalism.</p>
+  </footer>
+
+  <script>
+    const roles = ["Gokul", "FullStack Developer", "Java Specialist", "Frontend Minimalist"];
+    let typeIndex = 0;
+    let charIndex = 0;
+    const typeEl = document.getElementById("typewriter");
+
+    function typeWriter() {
+      if (charIndex < roles[typeIndex].length) {
+        typeEl.textContent += roles[typeIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 100);
+      } else {
+        setTimeout(() => {
+          charIndex = 0;
+          typeEl.textContent = "";
+          typeIndex = (typeIndex + 1) % roles.length;
+          setTimeout(typeWriter, 500);
+        }, 1500);
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    window.addEventListener('scroll', () => {
+      const topBtn = document.getElementById('backToTop');
+      topBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+
+    window.onload = function() {
+      typeWriter();
+      // Animate skill bars
+      document.querySelectorAll('.progress').forEach(bar => {
+        const level = bar.getAttribute('data-level');
+        bar.style.width = level + '%';
+      });
+    };
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Message sent successfully!");
+      this.reset();
+    });
+    
+    function openSocial(platform) {
+      const urls = {
+        github: 'https://github.com/gokulalagarsamy',
+        linkedin: "https://www.linkedin.com/in/gokul-a-151723228?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        instagram: "https://www.instagram.com/gokul._.4?igsh=MXYxN3llOXN3MDFqNQ==",
+        // gmail: "gokulalagarsamy301@gmail.com"
+      };
+      window.open(urls[platform], '_blank');
+    }
+    document.getElementById('emailIcon').addEventListener('click', function() {
+            // Replace with your actual email address
+            const recipientEmail = 'gokulalagarsamy301@gmail.com';
+            
+            // Optional: Pre-fill subject and body
+            const subject = 'Contact from Portfolio';
+            const body = 'Hello,\n\nI would like to get in touch with you regarding...';
+            
+            // Encode the components for URL
+            const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipientEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open Gmail compose window
+            window.open(mailtoLink, '_blank');
+            
+            // Alternative standard mailto (works in all browsers but may not open Gmail directly)
+            // window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</body>
+</html>
